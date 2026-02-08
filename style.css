@@ -1,0 +1,331 @@
+:root {
+  --bg-primary: #0a0e27;
+  --bg-glass: rgba(255, 255, 255, 0.05);
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --text-primary: #e0e6ff;
+  --text-secondary: #8b95c9;
+  --accent-cyan: #00d9ff;
+  --accent-red: #ff4757;
+  --accent-amber: #ffa502;
+  --accent-green: #26de81;
+  
+  font-family: 'Inter', system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1e3f 100%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 350px 1fr 350px;
+  grid-template-rows: 1fr 200px;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Glassmorphism panels */
+.panel {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+  border-radius: 20px;
+  padding: 24px;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.panel h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+.panel h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Widgets */
+.widget {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* Metrics */
+.metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.metric:last-child {
+  margin-bottom: 0;
+}
+
+.metric .value {
+  font-weight: 600;
+  color: var(--accent-cyan);
+}
+
+/* Progress bars */
+.progress {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+  margin: 0 12px;
+  overflow: hidden;
+}
+
+.progress .bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  width: 0%;
+}
+
+/* Neural Core */
+#neural-core {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.core-ring {
+  width: 300px;
+  height: 300px;
+  border: 2px solid var(--accent-cyan);
+  border-radius: 50%;
+  position: absolute;
+  animation: rotate 20s linear infinite;
+}
+
+.core-pulse {
+  width: 200px;
+  height: 200px;
+  border: 2px solid var(--accent-cyan);
+  border-radius: 50%;
+  position: absolute;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.core-text {
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  position: relative;
+  z-index: 10;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.core-status {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* State animations */
+.state-idle .core-ring {
+  border-color: var(--accent-cyan);
+}
+
+.state-listening .core-ring {
+  border-color: var(--accent-red);
+  animation: pulse-fast 1s ease-in-out infinite;
+}
+
+.state-processing .core-ring {
+  border-color: var(--accent-amber);
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% { 
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-fast {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% { 
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+/* Energy ring */
+.energy-score {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.energy-ring {
+  width: 120px;
+  height: 120px;
+  position: relative;
+}
+
+.energy-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.energy-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.05);
+  stroke-width: 8;
+}
+
+.energy-fg {
+  fill: none;
+  stroke: var(--accent-green);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 251.2;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.energy-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.energy-text #energy-score {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--accent-green);
+}
+
+.energy-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* Terminal */
+#terminal {
+  grid-column: 1 / -1;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Fira Code', monospace;
+  font-size: 13px;
+}
+
+#terminal-logs {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 12px;
+  color: var(--text-secondary);
+}
+
+#terminal-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prompt {
+  color: var(--accent-green);
+  font-weight: 600;
+}
+
+#command-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Lists */
+.list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.list .empty {
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-style: italic;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}

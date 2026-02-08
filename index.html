@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Friday OS - Autonomous AI Operating System</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Neural Core (Center) -->
+      <div id="neural-core" class="state-idle">
+        <div class="core-ring"></div>
+        <div class="core-pulse"></div>
+        <div class="core-text">FRIDAY</div>
+        <div class="core-status">Idle</div>
+      </div>
+
+      <!-- Left Panel: Infrastructure -->
+      <div id="left-panel" class="panel">
+        <h2>⚙️ Infrastructure</h2>
+        
+        <div class="widget">
+          <h3>System</h3>
+          <div class="metric">
+            <span>CPU</span>
+            <div class="progress"><div class="bar" id="cpu-bar"></div></div>
+            <span id="cpu-value">0%</span>
+          </div>
+          <div class="metric">
+            <span>Memory</span>
+            <div class="progress"><div class="bar" id="memory-bar"></div></div>
+            <span id="memory-value">0%</span>
+          </div>
+          <div class="metric">
+            <span>Disk</span>
+            <div class="progress"><div class="bar" id="disk-bar"></div></div>
+            <span id="disk-value">0%</span>
+          </div>
+        </div>
+
+        <div class="widget">
+          <h3>💰 Trading</h3>
+          <div class="metric">
+            <span>ETH Price</span>
+            <span id="eth-price" class="value">$0.00</span>
+          </div>
+          <div class="metric">
+            <span>24h Change</span>
+            <span id="eth-change" class="value">0%</span>
+          </div>
+          <div class="metric">
+            <span>Profit</span>
+            <span id="profit" class="value">$0.00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel: Business -->
+      <div id="right-panel" class="panel">
+        <h2>📊 Business</h2>
+        
+        <div class="widget">
+          <h3>⚡ Energy</h3>
+          <div class="energy-score">
+            <div class="energy-ring">
+              <svg viewBox="0 0 100 100">
+                <circle class="energy-bg" cx="50" cy="50" r="40" />
+                <circle class="energy-fg" id="energy-circle" cx="50" cy="50" r="40" />
+              </svg>
+              <div class="energy-text">
+                <span id="energy-score">90</span>
+                <span class="energy-label">/100</span>
+              </div>
+            </div>
+          </div>
+          <div class="metric">
+            <span>Work today</span>
+            <span id="work-today" class="value">0h 0m</span>
+          </div>
+          <div class="metric">
+            <span>Breaks</span>
+            <span id="breaks-today" class="value">0</span>
+          </div>
+        </div>
+
+        <div class="widget">
+          <h3>📋 Tasks</h3>
+          <div class="metric">
+            <span>Active</span>
+            <span id="tasks-active" class="value">0</span>
+          </div>
+          <div class="metric">
+            <span>Proposable</span>
+            <span id="tasks-proposable" class="value">0</span>
+          </div>
+          <div class="metric">
+            <span>Acceptance</span>
+            <span id="task-acceptance" class="value">0%</span>
+          </div>
+        </div>
+
+        <div class="widget">
+          <h3>🔔 Reminders</h3>
+          <div id="reminders-list" class="list">
+            <div class="empty">No reminders due</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom: Terminal -->
+      <div id="terminal">
+        <div id="terminal-logs"></div>
+        <div id="terminal-input">
+          <span class="prompt">friday@os:~$</span>
+          <input type="text" id="command-input" placeholder="Type command..." />
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
