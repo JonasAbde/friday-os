@@ -1,0 +1,69 @@
+# This is a template CircleCI deploy config
+# that shows how to use deploy markers to track deployments.
+# You can edit this template to add your custom deployment logic.
+
+version: 2.1
+
+jobs:
+  deploy-component:
+    docker:
+      - image: cimg/base:current
+    environment:
+      COMPONENT_NAME: << pipeline.deploy.component_name >>
+      NAMESPACE: << pipeline.deploy.namespace >>
+      ENVIRONMENT_NAME: << pipeline.deploy.environment_name >>
+      TARGET_VERSION: << pipeline.deploy.target_version >>
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+
+      - run:
+          name: Plan deployment
+          command: |
+            circleci run release plan "${CIRCLE_JOB}" \
+              --environment-name="${ENVIRONMENT_NAME}" \
+              --component-name="${COMPONENT_NAME}" \
+              --target-version="${TARGET_VERSION}"
+
+      - run:
+          name: Perform deployment
+          command: echo "Replace this step with your custom deployment logic"
+
+      - run:
+          name: Update deployment status to running
+          command: circleci run release update "${CIRCLE_JOB}" --status=RUNNING
+
+      - run:
+          name: Update planned release to SUCCESS
+          command: |
+            circleci run release update \
+              --status=SUCCESS
+          when: on_success
+      - run:
+          name: Update planned release to FAILED
+          command: |
+            circleci run release update \
+             --status=FAILED
+          when: on_fail
+  cancel-deploy:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - run:
+          name: Update planned release to CANCELED
+          command: |
+            circleci run release update \
+             --status=CANCELED
+
+workflows:
+  deploy:
+    jobs:
+      - deploy-component
+      - cancel-deploy:
+          requires:
+            - deploy-component:
+              - canceled
+          filters:
+            branches:
+              only: main
